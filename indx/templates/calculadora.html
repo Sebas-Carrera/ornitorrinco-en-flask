@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+	<title>Flask app</title>
+	
+	<meta charset="utf-8">
+	
+	<title>Calcula-Dora</title>
+	
+  <body style="background-color:#159209;">
+	
+ <input type="text" maxlength="12" id="txt_pantalla" style="text-align: right;" value="0" disabled>
+<br>
+</background-size><button onclick="número(1)">1</button>
+	<button onclick="número(2)">2</button>
+	<button onclick="número(3)">3</button>
+	<button onclick="operación('+')">+</button><br>
+	<button onclick="número(4)">4</button>
+	<button onclick="número(5)">5</button>
+	<button onclick="número(6)">6</button>
+	<button onclick="operación('-')">-</button><br>
+	<button onclick="número(7)">7</button>
+	<button onclick="número(8)">8</button>
+	<button onclick="número(9)">9</button>
+	<button onclick="operación('*')">*</button><br>
+	<button onclick="punto()">.</button>
+	<button onclick="número(0)">0</button>
+	<button onclick="borrar()">-</button>
+	<button onclick="operación('/')">/</button>
+	<button onclick="resultado()">=</button>
+
+  <script type="text/javascript">
+
+  		var uno = 0, dos = 0, op = "", leer = true, oper = false;
+  		function número(num)
+  		{
+  			if(document.getElementById("txt_pantalla").value.length < 11)
+  			{
+  				if(!leer)
+  				{
+  					document.getElementById("txt_pantalla").value = 0;
+  					leer = true;
+  				}
+
+  				if(num == "0" && document.getElementById("txt_pantalla").value == "0")
+  					document.getElementById("txt_pantalla").value = 0;
+  				else if(num == "0")
+  					document.getElementById("txt_pantalla").value += "0";
+  				else if(document.getElementById("txt_pantalla").value == "0")
+  					document.getElementById("txt_pantalla").value = num;
+  				else
+  					document.getElementById("txt_pantalla").value += "" + num;
+  			}
+
+  			if(op == "=")
+  				oper = false;
+  		}
+  		function operación(signo)
+  		{
+  			op = signo;
+
+  			uno = parseFloat(document.getElementById("txt_pantalla").value);
+  			if(leer && oper)
+  				operación2();
+  			leer = false;
+  			oper = true;
+  		}
+
+  		function operación2()
+  		{
+  			switch(op)
+  			{
+  				case "+": dos = uno + parseFloat(document.getElementById("txt_pantalla").value); break;
+  				case "-": dos = uno - parseFloat(document.getElementById("txt_pantalla").value); break;
+  				case "*": dos = uno * parseFloat(document.getElementById("txt_pantalla").value); break;
+  				case "/": dos = uno / parseFloat(document.getElementById("txt_pantalla").value); break;
+  				case "=":  dos = document.getElementById("txt_pantalla").value; break;
+  				default: dos = 0;
+  			}
+  			document.getElementById("txt_pantalla").value = dos;
+  		}
+
+  		function resultado()
+  		{
+  			operación2();
+  			document.getElementById("txt_pantalla").value = dos;
+  			op = "=";
+  			leer = false;
+  			dos = 0;
+  		}
+
+  		function borrar()
+  		{
+  			if(document.getElementById("txt_pantalla").value.length == 1)
+  				document.getElementById("txt_pantalla").value = 0;
+  			else
+  			{
+  				var tmp = "";
+  				for(var i = 0; i < document.getElementById("txt_pantalla").value.length - 1; i++)
+  					tmp += document.getElementById("txt_pantalla").value[i];
+  				if(tmp == "-")
+  					tmp = "0";
+  				document.getElementById("txt_pantalla").value = tmp;
+  			}
+  		}
+
+  		function punto()
+  		{
+  			if(document.getElementById("txt_pantalla").value.indexOf(".") >= 0 && (!leer || op != "") && !oper)
+  			{	}
+  			else
+  				if(leer)
+  					document.getElementById("txt_pantalla").value += ".";
+  				else
+  				{
+  					document.getElementById("txt_pantalla").value = "0.";
+  					leer = true;
+  				}
+			} 
+  	</script>
+</body>
+</head>
+</html>
